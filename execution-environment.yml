@@ -1,0 +1,23 @@
+---
+version: 3
+images:
+  base_image:
+    name: quay.io/ansible/creator-ee:latest
+options:
+  package_manager_path: /usr/bin/microdnf
+dependencies:
+  ansible_core:
+    package_pip: ansible-core
+  galaxy: requirements.yml
+  python: requirements.txt
+additional_build_steps:
+  prepend_base:
+    # copy a custom CA cert into the base image and recompute the trust database
+    # because this is in "base", all stages will inherit (including the final EE)
+    - RUN mkdir /home/runner/scripts
+    - RUN mkdir /home/runner/rules
+    - ADD files/pytest/ /home/runner/scripts/
+    - ADD files/rules/ /home/runner/
+    - ADD files/.ansible-lint.cfg /home/runner/.ansible-lint.cfg
+    - RUN chmod -R 0755 /home/runner/scripts
+    - RUN chmod -R 0755 /home/runner/rules  

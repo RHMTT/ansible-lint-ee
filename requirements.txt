@@ -1,0 +1,6 @@
+pyhtml
+pytest
+pytest-ansible
+pytest-html
+pytest-metadata
+pytest-xdist
