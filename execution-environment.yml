@@ -12,8 +12,6 @@ dependencies:
   python: requirements.txt
 additional_build_steps:
   prepend_base:
-    # copy a custom CA cert into the base image and recompute the trust database
-    # because this is in "base", all stages will inherit (including the final EE)
     - RUN mkdir /home/runner/scripts
     - RUN mkdir /home/runner/rules
     - ADD files/pytest/ /home/runner/scripts/
